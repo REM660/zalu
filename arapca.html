@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyt — Arapça Öğrenme Platformu</title>
+<noscript><style>.rev{opacity:1;transform:none}</style></noscript>
+<meta name="description" content="Elifbâdan kıraata, sınıf ortasında veya kendi hızında ilerleyen Arapça öğrenme programı. 24 ders, haftalık okuma pratiği, öğretmen destekli sınav.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<script>
+(function(){try{var t=JSON.parse(localStorage.getItem('beyt.tema'));if(t==='night')document.documentElement.className='night';}catch(e){}})();
+</script>
+<style>
+/* ---------- temel ---------- */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#f3eee2; --yuzey:#fbf7ef; --yuzey2:#ece5d5;
+  --ink:#22201c; --yumusak:#544e45; --soluk:#8a8175;
+  --cizgi:rgba(34,32,28,.16); --ince:rgba(34,32,28,.08);
+  --petrol:#1f4a44; --petrol-acik:#2c635b; --pirinc:#95761f; --kil:#94573a;
+  --isik:rgba(255,253,247,.7);
+  --golge:0 1px 1px rgba(34,32,28,.03), 0 22px 44px -34px rgba(34,32,28,.5);
+  --pat:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='46' height='46' viewBox='0 0 46 46'><g fill='none' stroke='%231f4a44' stroke-opacity='.5' stroke-width='.8'><rect x='11.5' y='11.5' width='23' height='23'/><rect x='11.5' y='11.5' width='23' height='23' transform='rotate(45 23 23)'/></g></svg>");
+  --f-baslik:"Cormorant Garamond",Georgia,serif;
+  --f-metin:"Spectral",Georgia,serif;
+  --f-arap:"Amiri","Noto Naskh Arabic","Times New Roman",serif;
+  --f-ar:"Noto Naskh Arabic","Amiri",serif;
+  --f-ui:ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;
+}
+html.night{
+  --paper:#15161a; --yuzey:#1c1e24; --yuzey2:#24272e;
+  --ink:#e9e2d3; --yumusak:#c2baa8; --soluk:#8d8677;
+  --cizgi:rgba(233,226,211,.17); --ince:rgba(233,226,211,.08);
+  --petrol:#82b7aa; --petrol-acik:#a6d0c6; --pirinc:#c6a25c; --kil:#cd8e6b;
+  --isik:rgba(255,255,255,.05);
+  --golge:0 22px 44px -34px rgba(0,0,0,.9);
+  --pat:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='46' height='46' viewBox='0 0 46 46'><g fill='none' stroke='%23e9e2d3' stroke-opacity='.14' stroke-width='.8'><rect x='11.5' y='11.5' width='23' height='23'/><rect x='11.5' y='11.5' width='23' height='23' transform='rotate(45 23 23)'/></g></svg>");
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px;-webkit-text-size-adjust:100%}
+body{font-family:var(--f-metin);font-weight:400;background:var(--paper);color:var(--ink);line-height:1.7;overflow-x:hidden;font-size:17px}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--pirinc);outline-offset:3px}
+::selection{background:var(--petrol);color:var(--paper)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+.ar{font-family:var(--f-ar);direction:rtl;unicode-bidi:isolate}
+.ar-blk{font-family:var(--f-ar);direction:rtl;line-height:2.15}
+.k{letter-spacing:.16em;text-transform:uppercase;font-family:var(--f-ui);font-size:.68rem;font-weight:600;color:var(--soluk)}
+.serif-n{font-family:var(--f-baslik);font-size:2.4rem;line-height:1;font-weight:600}
+.kesik{height:1px;background:var(--cizgi);border:0}
+.tel{color:var(--soluk);font-size:.92rem}
+
+/* ---------- duyuru + menü ---------- */
+.duyuru{background:var(--ink);color:var(--paper);font-family:var(--f-ui);font-size:.72rem;letter-spacing:.06em;text-align:center;padding:8px 20px}
+html.night .duyuru{background:var(--yuzey2);color:var(--ink)}
+.duyuru b{font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.66rem;margin-right:10px;color:var(--pirinc)}
+.duyuru a{border-bottom:1px solid currentColor;padding-bottom:1px;opacity:.9}
+.duyuru a:hover{opacity:1}
+.menu{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--ince);transition:border-color .3s}
+.menu.izildi{border-bottom-color:var(--cizgi)}
+.menu-ic{display:flex;align-items:center;gap:26px;height:76px}
+.marka{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.marka svg{width:34px;height:34px;color:var(--petrol)}
+.marka-yazi b{display:block;font-family:var(--f-baslik);font-size:1.6rem;font-weight:700;line-height:1;letter-spacing:.01em;color:var(--ink)}
+.marka-yazi i{display:block;font-style:normal;font-family:var(--f-ui);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soluk);margin-top:5px}
+.linkler{display:flex;gap:28px;margin-left:auto;list-style:none;font-family:var(--f-ui);font-size:.82rem}
+.linkler a{color:var(--yumusak);padding:4px 0;position:relative;transition:color .2s}
+.linkler a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--pirinc);transition:right .28s}
+.linkler a:hover{color:var(--ink)}
+.linkler a:hover::after,.linkler a.etkin::after{right:0}
+.linkler a.etkin{color:var(--ink)}
+.menu-sag{display:flex;align-items:center;gap:18px;font-family:var(--f-ui);font-size:.8rem}
+.giris{color:var(--yumusak);border-bottom:1px solid var(--cizgi);padding-bottom:2px}
+.giris:hover{color:var(--ink);border-color:var(--ink)}
+.tema{background:none;border:1px solid var(--cizgi);border-radius:2px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;transition:.25s;color:var(--yumusak)}
+.tema:hover{color:var(--ink);border-color:var(--ink)}
+.tema svg{width:16px;height:16px}
+html.night .gunes{display:none}
+.gunes{display:block}
+html.night .ay{display:block}
+.ay{display:none}
+.dugme{display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--f-ui);font-size:.82rem;font-weight:500;border-radius:2px;cursor:pointer;transition:.25s}
+.dugme:hover{background:var(--petrol);border-color:var(--petrol)}
+html.night .dugme{background:var(--petrol);border-color:var(--petrol);color:#15201e}
+html.night .dugme:hover{background:var(--petrol-acik);border-color:var(--petrol-acik)}
+.dugme.ince{background:none;color:var(--ink);border-color:var(--cizgi)}
+.dugme.ince:hover{background:none;border-color:var(--ink);color:var(--ink)}
+.dugme.tam{width:100%;justify-content:center}
+.mobil-btn{display:none;background:none;border:0;font-family:var(--f-ui);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:var(--yumusak);padding:6px 0}
+
+/* ---------- hero ---------- */
+.hero{padding:74px 0 40px;position:relative;overflow:hidden}
+.hero-ark{position:absolute;inset:0;background-image:var(--pat);opacity:.5;mask-image:radial-gradient(120% 90% at 78% 8%,#000,transparent 62%);-webkit-mask-image:radial-gradient(120% 90% at 78% 8%,#000,transparent 62%);pointer-events:none}
+.hero-ic{position:relative;display:grid;grid-template-columns:1.02fr .98fr;gap:70px;align-items:center}
+.rozet{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-ui);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pirinc);margin-bottom:26px}
+.rozet i{width:5px;height:5px;background:var(--pirinc);border-radius:50%;font-style:normal}
+h1{font-family:var(--f-baslik);font-weight:500;font-size:clamp(2.7rem,5.6vw,4.5rem);line-height:1.04;letter-spacing:-.012em;margin-bottom:26px;text-wrap:balance}
+h1 em{font-style:italic;color:var(--petrol)}
+.giris-par{max-width:46ch;font-size:1.06rem;color:var(--yumusak);line-height:1.78;margin-bottom:34px}
+.hero-dug{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px}
+.rakamlar{display:flex;border-top:1px solid var(--cizgi);padding-top:22px;gap:0}
+.rakam{padding-right:34px;margin-right:34px;border-right:1px solid var(--ince)}
+.rakam:last-child{border:0;margin:0;padding:0}
+.rakam b{display:block;font-family:var(--f-baslik);font-size:1.85rem;font-weight:600;line-height:1}
+.rakam span{font-family:var(--f-ui);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soluk)}
+.mihrab{position:relative;border:1px solid var(--cizgi);border-radius:300px 300px 4px 4px;background:linear-gradient(180deg,var(--yuzey),var(--yuzey2));padding:74px 48px 46px;box-shadow:var(--golge);text-align:center}
+.mihrab::before{content:"";position:absolute;inset:11px;border:1px solid var(--ince);border-radius:290px 290px 2px 2px;pointer-events:none}
+.mihrab-yazi{font-family:var(--f-arap);font-size:1.75rem;line-height:2.3;color:var(--ink);direction:rtl}
+.mihrab-alt{font-family:var(--f-metin);font-style:italic;font-size:.9rem;color:var(--soluk);margin-top:10px}
+.mihrab-orta{width:56px;height:1px;background:var(--cizgi);margin:26px auto}
+.mihrab-not{font-family:var(--f-ui);font-size:.74rem;color:var(--yumusak);line-height:1.85;text-align:left;border-left:1px solid var(--pirinc);padding-left:16px;margin-top:30px}
+.mihrab-not b{font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.66rem;color:var(--pirinc);display:block;margin-bottom:4px}
+.yildirim{position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 8%,var(--isik),transparent 70%);pointer-events:none;border-radius:inherit}
+
+/* ---------- süs ayırıcı ---------- */
+.ayir{display:flex;align-items:center;gap:22px;margin:0 auto;max-width:1140px;padding:0 28px}
+.ayir hr{flex:1;height:1px;background:var(--cizgi);border:0}
+.ayir svg{width:19px;height:19px;color:var(--cizgi)}
+
+/* ---------- bölüm başlığı ---------- */
+.bolum{padding:96px 0}
+.bolum.iz{border-top:1px solid var(--ince);background:var(--yuzey)}
+.bolum-ic{display:grid;grid-template-columns:270px 1fr;gap:64px;align-items:start}
+.kenar .k{margin-bottom:12px}
+.kenar h3{font-family:var(--f-baslik);font-size:1.5rem;font-weight:600;line-height:1.2;margin-bottom:14px}
+.kenar p{font-size:.9rem;color:var(--soluk);line-height:1.7}
+.kenar .no{font-family:var(--f-baslik);font-size:1.05rem;color:var(--pirinc);display:block;margin-bottom:14px}
+
+/* ---------- yol haritası ---------- */
+.asama{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--cizgi)}
+.asama-ic{padding:30px 28px 34px 0;border-right:1px solid var(--ince)}
+.asama-ic:last-child{border:0}
+.asama .k{display:block;margin-bottom:16px}
+.asama h4{font-family:var(--f-baslik);font-size:1.4rem;font-weight:600;margin-bottom:10px}
+.asama p{font-size:.9rem;color:var(--yumusak);line-height:1.7}
+.asama .sayi{font-family:var(--f-ui);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pirinc);display:block;margin-top:16px}
+.alinti{margin-top:56px;border-left:2px solid var(--pirinc);padding:6px 0 6px 26px;max-width:62ch}
+.alinti p{font-family:var(--f-baslik);font-style:italic;font-size:1.35rem;line-height:1.55;color:var(--ink)}
+.alinti span{font-family:var(--f-ui);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soluk);display:block;margin-top:12px}
+
+/* ---------- alfabe ---------- */
+.ara-kutu{position:relative;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--cizgi);padding-bottom:12px;margin-bottom:26px;max-width:280px}
+.ara-kutu svg{width:15px;height:15px;color:var(--soluk);flex-shrink:0}
+.ara-kutu input{flex:1;background:none;border:0;outline:none;font-family:var(--f-metin);font-size:.95rem;color:var(--ink);padding:2px 0}
+.ara-kutu input::placeholder{color:var(--soluk);font-style:italic}
+.alfabe{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.harf{border:1px solid var(--ince);background:none;border-radius:2px;aspect-ratio:1/.92;display:grid;place-items:center;cursor:pointer;transition:.18s;padding:0}
+.harf span{font-family:var(--f-ar);font-size:1.5rem;line-height:1;color:var(--ink);transition:.18s}
+.harf:hover{background:var(--yuzey);border-color:var(--cizgi)}
+.harf.secili{background:var(--petrol);border-color:var(--petrol)}
+.harf.secili span{color:var(--paper)}
+.harf.gizli{display:none}
+.harf-kutu{border:1px solid var(--cizgi);background:var(--yuzey);border-radius:2px;padding:34px 36px;margin-top:34px;display:grid;grid-template-columns:150px 1fr;gap:38px;align-items:start}
+.harf-buyuk{font-family:var(--f-ar);font-size:5.2rem;line-height:.9;color:var(--petrol);text-align:center}
+.harf-buyuk small{display:block;font-family:var(--f-ui);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--soluk);margin-top:14px}
+.harf-ad{font-family:var(--f-baslik);font-size:1.9rem;font-weight:600;line-height:1.1}
+.harf-ad em{font-style:italic;color:var(--soluk);font-size:1.15rem}
+.harf-aciklama{font-size:.92rem;color:var(--yumusak);margin:14px 0 22px;max-width:52ch}
+.formlar{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ince);background:var(--paper)}
+.form{border-left:1px solid var(--ince);padding:14px 8px 10px;text-align:center}
+.form:first-child{border:0}
+.form b{display:block;font-family:var(--f-ar);font-size:1.7rem;line-height:1.4;color:var(--ink)}
+.form span{font-family:var(--f-ui);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soluk)}
+.ornek-kutu{margin-top:22px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--ince)}
+.ornek-kutu b{font-family:var(--f-ar);font-size:1.6rem;color:var(--ink)}
+.ornek-kutu i{font-style:normal;font-family:var(--f-ui);font-size:.72rem;letter-spacing:.08em;color:var(--pirinc)}
+.ornek-kutu span{font-size:.92rem;color:var(--yumusak)}
+.hemze{font-size:.9rem;color:var(--soluk);margin-top:26px;padding-top:18px;border-top:1px solid var(--ince)}
+.hemze b{font-family:var(--f-ar);font-size:1.15rem;color:var(--ink)}
+
+/* ---------- dersler ---------- */
+.ozet{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-bottom:26px}
+.ileri{width:190px;height:3px;background:var(--yuzey2);position:relative;overflow:hidden}
+.ileri i{position:absolute;inset:0 auto 0 0;background:var(--petrol);width:0;transition:width .5s}
+.ders{list-style:none;border-top:1px solid var(--cizgi)}
+.ders li{border-bottom:1px solid var(--ince)}
+.ders button{width:100%;display:grid;grid-template-columns:52px 1fr 108px 116px 28px;gap:18px;align-items:center;background:none;border:0;padding:19px 6px;cursor:pointer;text-align:left;transition:background .2s}
+.ders button:hover{background:var(--yuzey)}
+.ders .idx{font-family:var(--f-baslik);font-size:1.05rem;color:var(--soluk)}
+.ders h5{font-family:var(--f-baslik);font-size:1.2rem;font-weight:600;line-height:1.3}
+.ders .faz{font-family:var(--f-ui);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soluk);display:block;margin-bottom:3px}
+.ders .sure,.ders .durum{font-family:var(--f-ui);font-size:.74rem;color:var(--soluk)}
+.ders .durum{display:flex;align-items:center;gap:7px;justify-content:flex-start}
+.ders .ok{width:15px;height:15px;border-radius:50%;border:1px solid var(--cizgi);display:grid;place-items:center;flex-shrink:0}
+.ders .ok svg{width:8px;height:8px;color:var(--petrol)}
+.ders .ok.dolu{background:var(--petrol);border-color:var(--petrol)}
+.ders .ok.dolu svg{color:var(--paper)}
+.ders li.kilitli button{opacity:.5;cursor:not-allowed}
+.ders li.kilitli button:hover{background:none}
+.ders .ok svg.kilit{display:none}
+.ders li.kilitli .ok svg:not(.kilit){display:none}
+.ders li.kilitli .ok svg.kilit{display:block;width:8px;height:8px;color:var(--soluk)}
+.tekrar{margin-top:30px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:.9rem;color:var(--soluk)}
+
+/* ---------- kelimeler ---------- */
+.defter-ar{position:relative;display:flex;align-items:center;gap:12px;border:1px solid var(--cizgi);background:var(--paper);padding:0 16px;height:46px;border-radius:2px;max-width:340px;margin-bottom:22px}
+.defter-ar svg{width:15px;height:15px;color:var(--soluk);flex-shrink:0}
+.defter-ar input{flex:1;background:none;border:0;outline:none;font-family:var(--f-metin);font-size:.94rem;color:var(--ink);height:100%}
+table{width:100%;border-collapse:collapse;font-size:.96rem}
+thead th{text-align:left;font-family:var(--f-ui);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soluk);font-weight:600;padding:0 14px 12px 0;border-bottom:1px solid var(--cizgi)}
+tbody td{padding:13px 14px 13px 0;border-bottom:1px solid var(--ince);vertical-align:baseline}
+tbody td:first-child{width:38%}
+tbody td:nth-child(2){width:22%;font-family:var(--f-ui);font-size:.78rem;color:var(--soluk);letter-spacing:.02em}
+tbody td:last-child{color:var(--yumusak)}
+tbody tr:hover{background:var(--yuzey)}
+td b{font-family:var(--f-ar);font-size:1.35rem;font-weight:500;line-height:1.5}
+.sayac{font-family:var(--f-ui);font-size:.74rem;color:var(--soluk);margin-top:16px}
+.gunun{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;margin-top:44px;padding:32px 34px;border:1px solid var(--cizgi);border-radius:2px;background:var(--yuzey);position:relative;overflow:hidden}
+.gunun::after{content:"";position:absolute;right:-40px;top:-40px;width:190px;height:190px;background-image:var(--pat);opacity:.6;pointer-events:none}
+.gunun-k{text-align:center;padding-right:34px;border-right:1px solid var(--cizgi)}
+.gunun-k b{display:block;font-family:var(--f-ar);font-size:2.7rem;line-height:1.5;color:var(--petrol)}
+.gunun-k span{font-family:var(--f-ui);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soluk)}
+
+/* ---------- okuma / metot ---------- */
+.iki{display:grid;grid-template-columns:1fr 1fr;gap:70px}
+.adim{list-style:none;counter-reset:a}
+.adim li{counter-increment:a;display:grid;grid-template-columns:40px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--ince)}
+.adim li:last-child{border:0}
+.adim li::before{content:"0" counter(a);font-family:var(--f-baslik);font-size:1.05rem;color:var(--pirinc);padding-top:4px}
+.adim h5{font-family:var(--f-baslik);font-size:1.22rem;font-weight:600;margin-bottom:5px}
+.adim p{font-size:.9rem;color:var(--yumusak)}
+.ogretmen{list-style:none}
+.ogretmen li{display:grid;grid-template-columns:56px 1fr auto;gap:20px;align-items:center;padding:20px 0;border-bottom:1px solid var(--ince)}
+.ogretmen .halka{width:56px;height:56px;border:1px solid var(--cizgi);border-radius:50%;display:grid;place-items:center;font-family:var(--f-baslik);font-size:1.2rem;color:var(--petrol)}
+.ogretmen b{display:block;font-family:var(--f-baslik);font-size:1.15rem;font-weight:600}
+.ogretmen span{font-size:.85rem;color:var(--soluk)}
+.ogretmen .dil{font-family:var(--f-ui);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pirinc);text-align:right}
+
+/* ---------- metin okuma ---------- */
+.metin-kart{border:1px solid var(--cizgi);border-radius:2px;background:var(--yuzey);padding:38px 40px;position:relative}
+.metin-kart .k{position:absolute;top:18px;right:22px}
+.metin-ar{font-family:var(--f-ar);font-size:1.6rem;line-height:2.4;color:var(--ink);direction:rtl;text-align:right}
+.metin-tr{margin-top:24px;padding-top:20px;border-top:1px solid var(--ince);font-size:.95rem;color:var(--yumusak);font-style:italic}
+.tk-ac{display:flex;align-items:center;gap:12px;margin-top:26px}
+.tk-ac .k{margin-right:6px}
+
+/* ---------- sınav ---------- */
+.sinav{max-width:720px;border:1px solid var(--cizgi);border-radius:2px;background:var(--yuzey);padding:38px 40px}
+.sinav-ust{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}
+.soru{font-family:var(--f-baslik);font-size:1.6rem;font-weight:600;line-height:1.3;margin-bottom:6px}
+.soru-ar{font-family:var(--f-ar);font-size:1.8rem;color:var(--petrol);line-height:1.6;margin-bottom:24px;direction:rtl;text-align:right}
+.secenek{list-style:none;display:grid;gap:9px}
+.secenek li{}
+.secenek button{width:100%;display:flex;align-items:center;gap:14px;background:var(--paper);border:1px solid var(--ince);border-radius:2px;padding:14px 16px;cursor:pointer;text-align:left;font-size:.96rem;transition:.18s}
+.secenek button:hover:not([disabled]){border-color:var(--cizgi);background:var(--yuzey2)}
+.secenek .sec-harf{width:24px;height:24px;border:1px solid var(--cizgi);border-radius:50%;display:grid;place-items:center;font-family:var(--f-ui);font-size:.68rem;color:var(--soluk);flex-shrink:0;transition:.18s}
+.secenek .dogr u{text-decoration:none;border-bottom:1px solid var(--cizgi)}
+.secenek button.dogru{border-color:var(--petrol);background:rgba(31,74,68,.06)}
+.secenek button.dogru .sec-harf{border-color:var(--petrol);color:var(--petrol)}
+.secenek button.yanlis{border-color:var(--kil);background:rgba(148,87,58,.07)}
+.secenek button.yanlis .sec-harf{border-color:var(--kil);color:var(--kil)}
+.secenek button[disabled]{cursor:default}
+.aciklama{margin-top:20px;padding:16px 18px;border-left:2px solid var(--pirinc);background:var(--paper);font-size:.9rem;color:var(--yumusak);display:none}
+.aciklama.gorunur{display:block}
+.sinav-alt{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:24px}
+.sonuc{text-align:center;padding:14px 0}
+.sonuc b{font-family:var(--f-baslik);font-size:4rem;font-weight:600;line-height:1;display:block}
+.sonuc span{font-size:.92rem;color:var(--soluk)}
+
+/* ---------- fiyat ---------- */
+.fiyat{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--cizgi);border-radius:2px;background:var(--yuzey)}
+.plan{padding:38px 34px;border-left:1px solid var(--ince);display:flex;flex-direction:column}
+.plan:first-child{border:0}
+.plan.secili{border-top:2px solid var(--pirinc);padding-top:37px;background:var(--paper)}
+.plan h4{font-family:var(--f-baslik);font-size:1.35rem;font-weight:600;margin-bottom:6px}
+.plan .etiket{font-family:var(--f-ui);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pirinc);display:block;margin-bottom:12px}
+.plan .ucret{font-family:var(--f-baslik);font-size:2.5rem;font-weight:600;line-height:1.1;margin:14px 0 4px}
+.plan .ucret small{font-family:var(--f-metin);font-size:.85rem;font-weight:400;color:var(--soluk)}
+.plan > p{font-size:.9rem;color:var(--yumusak);margin-bottom:22px}
+.plan ul{list-style:none;margin-bottom:28px;flex:1}
+.plan li{font-size:.9rem;color:var(--yumusak);padding:7px 0 7px 20px;position:relative}
+.plan li::before{content:"";position:absolute;left:0;top:15px;width:7px;height:1px;background:var(--pirinc)}
+.fiyat-not{margin-top:22px;font-size:.86rem;color:var(--soluk)}
+
+/* ---------- iletişim ---------- */
+.iletisim{display:grid;grid-template-columns:1fr 1.15fr;gap:80px}
+.iletisim h3{font-family:var(--f-baslik);font-size:2rem;font-weight:600;line-height:1.2;margin-bottom:18px}
+.iletisim .kenar-p{font-size:1rem;color:var(--yumusak);max-width:42ch;margin-bottom:32px}
+.bilgi{list-style:none}
+.bilgi li{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--ince);font-size:.92rem}
+.bilgi .k{padding-top:3px}
+.bilgi span{color:var(--yumusak)}
+form.ilet{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:22px;padding-top:44px;border-top:1px solid var(--cizgi);margin-top:0}
+alan{display:grid;gap:8px}
+.alan label{font-family:var(--f-ui);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soluk)}
+.alan input,.alan select,.alan textarea{background:none;border:0;border-bottom:1px solid var(--cizgi);padding:10px 0;font-family:var(--f-metin);font-size:.98rem;color:var(--ink);outline:none;transition:border-color .25s;border-radius:0}
+.alan input:focus,.alan select:focus,.alan textarea:focus{border-color:var(--pirinc)}
+.alan textarea{resize:vertical;min-height:96px}
+.alan select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--soluk) 50%),linear-gradient(135deg,var(--soluk) 50%,transparent 50%);background-position:calc(100% - 12px) 18px,calc(100% - 7px) 18px;background-size:5px 5px;background-repeat:no-repeat;cursor:pointer}
+.alan select option{background:var(--paper);color:var(--ink)}
+.form-yanit{margin-top:22px;padding:16px 18px;border:1px solid var(--petrol);color:var(--petrol);font-size:.92rem;display:none}
+.form-yanit.gorunur{display:block}
+
+/* ---------- alt bilgi ---------- */
+.alt{border-top:1px solid var(--cizgi);background:var(--yuzey);padding:60px 0 34px;position:relative;overflow:hidden}
+.alt-ic{position:relative;display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:48px;padding-bottom:44px}
+.alt .marka{margin-bottom:16px}
+.alt p{font-size:.9rem;color:var(--soluk);max-width:32ch;line-height:1.7}
+.alt h6{font-family:var(--f-ui);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--soluk);font-weight:600;margin-bottom:16px}
+.alt ul{list-style:none}
+.alt li{margin-bottom:9px}
+.alt ul a{font-size:.9rem;color:var(--yumusak);transition:color .2s}
+.alt ul a:hover{color:var(--ink)}
+.alt-son{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--ince);padding-top:24px;font-family:var(--f-ui);font-size:.74rem;color:var(--soluk)}
+.sosyal{display:flex;gap:14px;margin-top:20px}
+.sosyal a{width:32px;height:32px;border:1px solid var(--cizgi);border-radius:50%;display:grid;place-items:center;font-family:var(--f-ui);font-size:.66rem;color:var(--yumusak);transition:.2s}
+.sosyal a:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- modal ---------- */
+.modal[hidden]{display:none}
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px}
+.modal-perde{position:absolute;inset:0;background:rgba(20,18,14,.55);backdrop-filter:blur(2px)}
+.modal-kutu{position:relative;width:min(680px,100%);max-height:88vh;overflow:auto;background:var(--paper);border:1px solid var(--cizgi);border-radius:2px;padding:44px 46px;box-shadow:0 40px 80px -50px rgba(0,0,0,.7)}
+.modal-x{position:absolute;top:16px;right:18px;width:32px;height:32px;border:0;background:none;font-size:1.3rem;line-height:1;color:var(--soluk);cursor:pointer;transition:color .2s}
+.modal-x:hover{color:var(--ink)}
+.modal-kutu .k{display:block;margin-bottom:10px}
+.modal-kutu h3{font-family:var(--f-baslik);font-size:2rem;font-weight:600;line-height:1.15;margin-bottom:14px;padding-right:30px}
+.modal-meta{display:flex;gap:20px;font-family:var(--f-ui);font-size:.72rem;color:var(--soluk);padding-bottom:20px;border-bottom:1px solid var(--ince);margin-bottom:24px}
+.modal-kutu p.ders-ac{font-size:1rem;color:var(--yumusak);line-height:1.8}
+.modal-kavram{margin:26px 0 0;padding:0;list-style:none}
+.modal-kavram li{font-size:.9rem;color:var(--yumusak);padding:8px 0 8px 20px;position:relative}
+.modal-kavram li::before{content:"";position:absolute;left:0;top:17px;width:8px;height:1px;background:var(--pirinc)}
+.modal-alt{margin-top:34px;padding-top:24px;border-top:1px solid var(--ince);display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+
+/* ---------- hareket ---------- */
+.rev{opacity:0;transform:translateY(12px)}
+.rev.gor{opacity:1;transform:none;transition:opacity .7s ease,transform .7s ease}
+html.no-mot .rev{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+.up{position:fixed;right:26px;bottom:26px;width:44px;height:44px;border:1px solid var(--cizgi);background:var(--paper);border-radius:50%;display:grid;place-items:center;cursor:pointer;opacity:0;visibility:hidden;transition:.3s;z-index:70;color:var(--yumusak)}
+.up.gorunur{opacity:1;visibility:visible}
+.up:hover{color:var(--ink);border-color:var(--ink)}
+.up svg{width:14px;height:14px}
+
+/* ---------- duyarlı ---------- */
+@media(max-width:1040px){
+  .bolum-ic{grid-template-columns:1fr;gap:38px}
+  .hero-ic{grid-template-columns:1fr;gap:56px}
+  .mihrab{max-width:520px;margin:0 auto}
+  .asama{grid-template-columns:1fr 1fr}
+  .asama-ic:nth-child(2n){border-right:0}
+  .asama-ic{border-bottom:1px solid var(--ince)}
+  .iki,.iletisim{grid-template-columns:1fr;gap:48px}
+  .alt-ic{grid-template-columns:1fr 1fr}
+  .alfabe{grid-template-columns:repeat(6,1fr)}
+  .harf-kutu{grid-template-columns:120px 1fr;gap:28px;padding:28px}
+  .harf-buyuk{font-size:4rem}
+}
+@media(max-width:760px){
+  body{font-size:16px}
+  .wrap{padding:0 20px}
+  .linkler{position:fixed;inset:0 0 auto 0;top:76px;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--cizgi);padding:8px 20px 20px;margin:0;display:none}
+  .linkler.acik{display:flex}
+  .linkler a{padding:13px 0;border-bottom:1px solid var(--ince);font-size:.95rem}
+  .mobil-btn{display:block;margin-left:auto}
+  .giris,.menu-sag .dugme{display:none}
+  .tema{order:3;margin-left:16px}
+  .asama{grid-template-columns:1fr}
+  .asama-ic{border-right:0;padding-right:0}
+  .alfabe{grid-template-columns:repeat(5,1fr)}
+  .formlar{grid-template-columns:repeat(2,1fr)}
+  .form:nth-child(3){border-left:0;border-top:1px solid var(--ince)}
+  .form:nth-child(4){border-top:1px solid var(--ince)}
+  .harf-kutu{grid-template-columns:1fr;text-align:center;padding:30px 24px}
+  .harf-kutu .k,.harf-aciklama,.ornek-kutu{text-align:center}
+  .ornek-kutu{justify-content:center}
+  .ders button{grid-template-columns:38px 1fr auto 16px;gap:12px;padding:16px 2px}
+  .ders .sure,.ders .durum > span:last-child{display:none}
+  .ders .ok{width:14px;height:14px}
+  .fiyat{grid-template-columns:1fr}
+  .plan{border-left:0;border-top:1px solid var(--ince)}
+  .plan:first-child{border-top:0}
+  .plan.secili{padding-top:38px}
+  form.ilet{grid-template-columns:1fr}
+  .sinav,.metin-kart{padding:28px 24px}
+  .modal-kutu{padding:34px 26px}
+  .alt-ic{grid-template-columns:1fr;gap:32px}
+  .bolum{padding:70px 0}
+  .giris-par{font-size:1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="duyuru">
+  <b>Sınav Dönemi</b> Kayıtlar açık · ilk iki hafta ücretsiz <a href="#fiyat">programı incele</a>
+</div>
+
+<header class="menu" id="menu">
+  <div class="wrap menu-ic">
+    <a href="#" class="marka">
+      <svg viewBox="0 0 200 200" fill="none" aria-hidden="true">
+        <path d="M100,10 115.3,63 163.6,36.4 137,84.7 190,100 137,115.3 163.6,163.6 115.3,137 100,190 84.7,137 36.4,163.6 63,115.3 10,100 63,84.7 36.4,36.4 84.7,63Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+        <circle cx="100" cy="100" r="19" stroke="currentColor" stroke-width="1.6"/>
+        <text x="100" y="109" text-anchor="middle" font-family="Amiri, serif" font-size="30" fill="currentColor">ب</text>
+      </svg>
+          <span class="marka-yazi"><b>Beyt</b><i>Arapça Eğitim</i></span>
+    </a>
+    <ul class="linkler" id="linkler">
+      <li><a href="#program">Program</a></li>
+      <li><a href="#alfabet">Elifbâ</a></li>
+      <li><a href="#dersler">Dersler</a></li>
+      <li><a href="#kelimeler">Kelime Defteri</a></li>
+      <li><a href="#sinav">Sınav</a></li>
+      <li><a href="#iletisim">İletişim</a></li>
+    </ul>
+    <div class="menu-sag">
+      <a href="#" class="giris">Giriş yap</a>
+      <button class="tema" id="temaBtn" aria-label="Aydınlık ve karanlık tema arasında geçiş yap">
+        <svg class="ay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+        <svg class="gunes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"/></svg>
+      </button>
+      <button class="dugme" onclick="document.querySelector('#iletisim').scrollIntoView({behavior:'smooth'})">Deneme ders</button>
+      <button class="mobil-btn" id="mobilBtn" aria-expanded="false">Menü</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-ark" aria-hidden="true"></div>
+  <div class="wrap hero-ic">
+    <div>
+      <span class="rozet"><i></i>Altı aylık yapılandırılmış program</span>
+      <h1>Arapçayı kelime kelime,<br><em>nefes nefes</em> öğrenin.</h1>
+      <p class="giris-par">Harfin çiziminden cümlenin tadına: on dört öğretmen eşliğinde, kendi hızınızda ilerleyen bir okuma programı. Her derste bir metin, her hafta bir sınav.</p>
+      <div class="hero-dug">
+        <button class="dugme" onclick="document.querySelector('#dersler').scrollIntoView({behavior:'smooth'})">İlk dersi aç</button>
+        <button class="dugme ince" onclick="document.querySelector('#program').scrollIntoView({behavior:'smooth'})">Programı oku</button>
+      </div>
+      <div class="ramaklar">
+        <div class="ramak"><b>24</b><span>Ders</span></div>
+        <div class="ramak"><b>36</b><span>Okuma parçası</span></div>
+        <div class="ramak"><b>6</b><span>Ay</span></div>
+        <div class="ramak"><b>%94</b><span>Ders tamamlama</span></div>
+      </div>
+    </div>
+
+    <figure class="mihrab">
+      <div class="yildirim" aria-hidden="true"></div>
+      <div class="mihrab-yazi ar-blk" data-tk>اِقْرَأْ بِالْعَرَبِيَّةِ</div>
+      <div class="mihrab-alt">“Arapça oku.”</div>
+      <div class="mihrab-orta"></div>
+      <div class="mihrab-not" data-tk>
+        <b>Okuma notu</b>
+        <span class="ar-blk" style="font-size:1.15rem;color:var(--ink);display:block;margin-bottom:8px">كِتَابٌ جَدِيدٌ مِنَ المَكْتَبَةِ</span>
+        Kütüphaneden yeni bir kitap.
+      </div>
+      <figcaption class="mihrab-alt" style="margin-top:22px;font-family:var(--f-ui);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase">Nûrî el-Hatîb · 12. ders</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="ayir" aria-hidden="true">
+  <hr>
+  <svg viewBox="0 0 200 200" fill="none"><path d="M100,10 115.3,63 163.6,36.4 137,84.7 190,100 137,115.3 163.6,163.6 115.3,137 100,190 84.7,137 36.4,163.6 63,115.3 10,100 63,84.7 36.4,36.4 84.7,63Z" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><circle cx="100" cy="100" r="30" stroke="currentColor" stroke-width="4"/></svg>
+  <hr>
+</div>
+
+<!-- ============ PROGRAM ============ -->
+<section class="bolum" id="program">
+  <div class="wrap">
+    <div class="bolum-ic rev">
+      <div class="kenar">
+        <span class="no">01</span>
+        <span class="k">Yol haritası</span>
+        <h3>Dört faz,<br>bir hedef</h3>
+        <p>Her fazın sonunda ölçülebilir bir beceri var. Sıralamayı atlarsanız ilerlemeniz durur; bu yüzden kapılar sırayla açılır.</p>
+      </div>
+      <div>
+        <div class="asama">
+          <div class="asama-ic">
+            <span class="k">Faz I · 6 ders</span>
+            <h4>Elifbâ</h4>
+            <p>Yazı yönü, 28 harf, dört biçim ve hareke sistemi. Bu fazın sonunda bir ismi harf harf yazabilirsiniz.</p>
+            <span class="sayi">2 hafta</span>
+          </div>
+          <div class="asama-ic">
+            <span class="k">Faz II · 6 ders</span>
+            <h4>Temel Okuma</h4>
+            <p>Harflerin birleştiği heceler, günlük kalıplar ve rakamlar. Metin okumaya ilk adım.</p>
+            <span class="sayi">3 hafta</span>
+          </div>
+          <div class="asama-ic">
+            <span class="k">Faz III · 6 ders</span>
+            <h4>Sözlük</h4>
+            <p>Fiil kipi, sıfat, sayı ve soru kalıbı. Kelimeleri cümle içinde tanımaya başlarsınız.</p>
+            <span class="sayi">4 hafta</span>
+          </div>
+          <div class="asama-ic">
+            <span class="k">Faz IV · 6 ders</span>
+            <h4>Kıraat</h4>
+            <p>Nesih yazısı, okuma kuralları, kısa hikâye ve diyaloglar. Artık kendi metninizi seçebilirsiniz.</p>
+            <span class="sayi">5 hafta</span>
+          </div>
+        </div>
+        <blockquote class="alinti">
+          <p>Arapçayı öğrenmek bir yabancı dala takılmak gibidir: kulağın alışkanlığı, gözün alışkanlığı, sonra da dilin sesi.</p>
+          <span>Leyla Hüsni · Kurucu öğretmen</span>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ALFABE ============ -->
+<section class="bolum iz" id="alfabet">
+  <div class="wrap">
+    <div class="bolum-ic rev">
+      <div class="kenar">
+        <span class="no">02</span>
+        <span class="k">Elifbâ</span>
+        <h3>Yirmi sekiz harf,<br>dört biçim</h3>
+        <p>Bir harf yalnız başına yazılırken, bir hecenin başında, ortasında ve sonunda farklı görünür. Bu yüzden yazı, harf değil <em>biçim</em> öğrenir.</p>
+        <p style="margin-top:14px">Aşağıdan bir harf seçin.</p>
+      </div>
+      <div>
+        <div class="ara-kutu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input type="text" id="harfAra" placeholder="Harf ara: cim, sad, ز…" aria-label="Harf ara">
+        </div>
+        <div class="alfabe" id="alfabe" role="tablist" aria-label="Arapça alfabe"></div>
+        <div class="harf-kutu" id="harfKutu" aria-live="polite"></div>
+        <p class="hemze">Harf sayılmayan iki işaret: <b>ء</b> hemze (ayn veya geçiş sesi) ve <b>أ إ آ ؤ ئ</b> — bunlar alfabe harflerinin taşıdığı uzun seslerdir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DERSLER ============ -->
+<section class="bolum" id="dersler">
+  <div class="wrap">
+    <div class="bolum-ic rev">
+      <div class="kenar">
+        <span class="no">03</span>
+        <span class="k">Dersler</span>
+        <h3>Yirmi dört ders,<br>hepsi açık</h3>
+        <p>Her ders ortalama on sekiz dakika. Bitirdiğiniz ders işaretlenir, ilerlemeniz tarayıcınızda saklanır.</p>
+        <div class="ozet" style="margin-top:26px">
+          <div class="ileri"><i id="ileriCubuk"></i></div>
+          <span class="tel" id="ileriYazi">0 / 24 ders</span>
+        </div>
+        <button class="dugme ince" id="sifirla">İlerlemeyi temizle</button>
+      </div>
+      <div>
+        <ul class="ders" id="dersList"></ul>
+        <p class="tekrar">Program altı ayda tamamlanır. Aynı dersi istediğiniz kadar tekrar edebilirsiniz — tekrar sayfası kapatılmaz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KELİMELER ============ -->
+<section class="bolum iz" id="kelimeler">
+  <div class="wrap">
+    <div class="bolum-ic rev">
+      <div class="kenar">
+        <span class="no">04</span>
+        <span class="k">Kelime Defteri</span>
+        <h3>Önce yüz<br>kelime</h3>
+        <p>Metinlerde geçen kelimeler, tek tıkla okunabilir biçimde burada. Arama kutusuna Türkçesini yazmanız yeterli.</p>
+      </div>
+      <div>
+        <div class="defter-ar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input type="text" id="kelimeAra" placeholder="Kitap, ev, su…" aria-label="Kelime ara">
+        </div>
+        <table>
+          <thead>
+            <tr><th>Kelime</th><th>Okunuşu</th><th>Anlamı</th></tr>
+          </thead>
+          <tbody id="kelimeGovde"></tbody>
+        </table>
+        <p class="sayac" id="kelimeSayac"></p>
+
+        <div class="gunun">
+          <div class="gunun-k">
+            <b class="ar" id="gununHarf"></b>
+            <span>Günün kelimesi</span>
+          </div>
+          <div>
+            <p style="font-size:.95rem;color:var(--soluk)" id="gununTr"></p>
+            <p style="margin-top:6px" id="gununOkunus"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METOT ============ -->
+<section class="bolum" id="metot">
+  <div class="wrap">
+    <div class="bolum-ic rev">
+      <div class="kenar">
+        <span class="no">05</span>
+        <span class="k">Yöntem</span>
+        <h3>Her derste<br>dört adım</h3>
+        <p>Dersin sonunda elinizde bir okuma parçası ve ona dair yirmi soruluk bir kontrol bulunur.</p>
+      </div>
+      <div class="iki">
+        <ol class="adim">
+          <li><div><h5>Önce dinle</h5><p>Öğretmen metni iki kez okur: bir kez yavaş, bir kez doğal hızda. Gözünüzü kapatıp dinleyin.</p></div></li>
+          <li><div><h5>Sonra gör</h5><p>Harflerin dört biçimi ekranda belirir, siz de kâğıda yazarsınız. Yazmadan okumayı öğrenmek mümkün değildir.</p></div></li>
+          <li><div><h5>Harfleri gizleyin</h5><p>Tashkeel gizlenir, metni kendiniz okumaya çalışırsınız. Takıldığınız yere işaret koyup tekrar dinleyin.</p></div></li>
+          <li><div><h5>Kontrol edin</h5><p>Yirmi soruluk kısa sınav. Yanlışlar sıradaki dersin başında tekrar sorulur.</p></div></li>
+        </ol>
+        <div>
+          <div class="metin-kart">
+            <span class="k">Ders 11 · örnek metin</span>
+            <p class="metin-ar" data-tk>الطَّالِبُ يَجْلِسُ فِي المَكْتَبَةِ وَيَقْرَأُ كِتَابًا جَدِيدًا. هُوَ يَدْرُسُ اللُّغَةَ العَرَبِيَّةَ كُلَّ يَوْم. فِي المَسَاءِ يَكْتُبُ دَرْسَهُ فِي دَفْتَرٍ صَغِير.</p>
+            <p class="metin-tr">Öğrenci kütüphanede oturur ve yeni bir kitap okur. Her gün Arapça öğrenir. Akşam dersini küçük bir deftere yazar.</p>
+            <div class="tk-ac">
+              <span class="k">Tashkeel</span>
+              <button class="dugme ince" data-tk-btn style="padding:8px 16px;font-size:.76rem">Gizle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ÖĞRETMENLER ============ -->
+<section class="bolum iz" id="ogretmenler">
+  <div class="wrap">
+    <div class="bolum-ic rev">
+      <div class="kenar">
+        <span class="no">06</span>
+        <span class="k">Öğretmenler</span>
+        <h3>Hangi âlemeden<br>ders alırsınız?</h3>
+        <p>Grup dersleri sekiz kişilik gruplarla yapılır; özel derslerde lehçe tercihinizi baştan belirtirsiniz.</p>
+      </div>
+      <ul class="ogretmen">
+        <li><div class="halka ar">ل</div><div><b>Leyla Hüsni</b><span>12 yıl · edebiyat ve kıraat</span></div><div class="dil">Kahire · MSA</div></li>
+        <li><div class="halka ar">م</div><div><b>Muhammed Sâlih</b><span>9 yıl · gramer ve hitap dili</span></div><div class="dil">Şam · Lübnan</div></li>
+        <li><div class="halka ar">ن</div><div><b>Nûra el-Amin</b><span>7 yıl · çocuklar için alfabe</span></div><div class="dil">Fas · Fas</div></li>
+        <li><div class="halka ar">ي</div><div><b>Yûsuf el-Amîn</b><span>14 yıl · medine dersleri</span></div><div class="dil">Amman · Ürdün</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SINAV ============ -->
+<section class="bolum" id="sinav">
+  <div class="wrap">
+    <div class="bolum-ic rev">
+      <div class="kenar">
+        <span class="no">07</span>
+        <span class="k">Sınav</span>
+        <h3>Altı soru,<br>iki dakika</h3>
+        <p>Alfabe ve temel okuma konularından altı soru. En yüksek puanınız tarayıcınızda saklanır.</p>
+        <p style="margin-top:16px">En iyi puanınız: <b id="enIyi">—</b></p>
+      </div>
+      <div class="sinav" id="sinavKutu">
+        <div class="sinav-ust">
+          <span class="k" id="soruSayac">Soru 1 / 6</span>
+          <div class="ileri" style="width:120px"><i id="sinavCubuk"></i></div>
+        </div>
+        <p class="soru" id="soruMetin"></p>
+        <p class="soru-ar" id="soruAr" dir="rtl"></p>
+        <ul class="secenek" id="secenekler"></ul>
+        <div class="aciklama" id="aciklama"></div>
+        <div class="sinav-alt" id="sinavAlt">
+          <span class="tel" id="puanYazi"></span>
+          <button class="dugme" id="sinavBtn" style="display:none">Sonraki soru</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FİYAT ============ -->
+<section class="bolum iz" id="fiyat">
+  <div class="wrap">
+    <div class="bolum-ic rev">
+      <div class="kenar">
+        <span class="no">08</span>
+        <span class="k">Kayıt</span>
+        <h3>Üç yol,<br>tek program</h3>
+        <p>Hep aynı müfredat. Tek fark, sizinle birlikte çalışacak kişi sayısı ve dersin saati.</p>
+      </div>
+      <div>
+        <div class="fiyat">
+          <div class="plan">
+            <h4>Deneme</h4>
+            <span class="etiket">Tanışma</span>
+            <div class="ucret">Ücretsiz<small> / 14 gün</small></div>
+            <p>Sözleşme yok, kart istenmez. İlk iki ders açık.</p>
+            <ul>
+              <li>2 ders (Elifbâ 1 ve 2)</li>
+              <li>Kelime defteri erişimi</li>
+              <li>Altı soruluk sınav</li>
+              <li>Topluluk sohbeti</li>
+            </ul>
+            <button class="dugme ince tam" onclick="document.querySelector('#iletisim').scrollIntoView({behavior:'smooth'})">Denemeye başla</button>
+          </div>
+          <div class="plan secili">
+            <h4>Dönem</h4>
+            <span class="etiket">En çok seçilen</span>
+            <div class="ucret">₺1.190<small> / 6 ay</small></div>
+            <p>Yirmi dört dersin tamamı, canlı grup dersleri ve sertifika.</p>
+            <ul>
+              <li>24 ders + 36 okuma parçası</li>
+              <li>Sekiz kişilik grup dersi</li>
+              <li>Aylık yazılı sınav</li>
+              <li>Sertifika ve ilerleme raporu</li>
+              <li>Yalnız grup dersleri kaydı</li>
+            </ul>
+            <button class="dugme tam" onclick="document.querySelector('#iletisim').scrollIntoView({behavior:'smooth'})">Döneme kaydol</button>
+          </div>
+          <div class="plan">
+            <h4>Özel Grup</h4>
+            <span class="etiket">Kurumlar için</span>
+            <div class="ucret">Teklif<small> / dönem</small></div>
+            <p>Kurum, okul veya şirket içi grup. Program sınıfınıza göre yeniden yazılır.</p>
+            <ul>
+              <li>En az 8 kişi</li>
+              <li>Kuruma özel müfredat</li>
+              <li>Öğretmen başına sınıf</li>
+              <li>Yönetici raporları</li>
+              <li>Ödenebilir fatura</li>
+            </ul>
+            <button class="dugme ince tam" onclick="document.querySelector('#iletisim').scrollIntoView({behavior:'smooth'})">Görüşelim</button>
+          </div>
+        </div>
+        <p class="fiyat-not">Dönem ücreti tek seferde alınır; taksit talebi üç aya kadar. Öğrenci ve öğretmen adına düzenlenen faturalar Kültür Bakanlığı burs başvurusunda kullanılabilir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ İLETİŞİM ============ -->
+<section class="bolum" id="iletisim">
+  <div class="wrap">
+    <div class="rev">
+      <div class="iletisim">
+        <div>
+          <span class="k" style="display:block;margin-bottom:14px">09 · İletişim</span>
+          <h3>Hangi programa<br>yakınsınız?</h3>
+          <p class="kenar-p">Yazın, hangi seviyede başlamak istediğinizi söyleyin. İki gün içinde sizinle görüşüp doğru seviyeyi birlikte belirleyelim.</p>
+          <ul class="bilgi">
+            <li><span class="k">E-posta</span><span>merhaba@beyt-arapca.com</span></li>
+            <li><span class="k">Telefon</span><span>+90 212 000 00 00</span></li>
+            <li><span class="k">Ders saatleri</span><span>Pazartesi–Cuma, 09.00–21.00</span></li>
+            <li><span class="k">Ofis</span><span>Balat, İstanbul · randevuyla</span></li>
+          </ul>
+        </div>
+        <form class="ilet" id="iletForm" novalidate>
+          <div class="alan">
+            <label for="ad">Ad Soyad</label>
+            <input type="text" id="ad" name="ad" required placeholder="Adınız ve soyadınız">
+          </div>
+          <div class="alan">
+            <label for="eposta">E-posta</label>
+            <input type="email" id="eposta" name="eposta" required placeholder="ornek@posta.com">
+          </div>
+          <div class="alan">
+            <label for="seviye">Seviyeniz</label>
+            <select id="seviye" name="seviye">
+              <option>Hiç Arapça bilmiyorum</option>
+              <option>Alfabe biliyorum, okuyamıyorum</option>
+              <option>Basit metin okuyabiliyorum</option>
+              <option>Akıcı okuyorum, konuşamıyorum</option>
+            </select>
+          </div>
+          <div class="alan">
+            <label for="program">Program</label>
+            <select id="program" name="program">
+              <option>Deneme (14 gün)</option>
+              <option>Dönem (6 ay)</option>
+              <option>Özel grup / kurum</option>
+            </select>
+          </div>
+          <div class="alan" style="grid-column:1/-1">
+            <label for="not">Not</label>
+            <textarea id="not" name="not" placeholder="Hedefiniz nedir, hangi günler müsaitsiniz?"></textarea>
+          </div>
+          <div style="grid-column:1/-1;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+            <button type="submit" class="dugme">Gönder</button>
+            <span class="tel">Yanıt süresi: 1–2 iş günü</span>
+          </div>
+          <p class="form-yanit" id="formYanit">Teşekkürler. Mesajınız ulaştı, iki gün içinde yazacağız.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="alt">
+  <div class="wrap">
+    <div class="alt-ic">
+      <div>
+        <a href="#" class="marka">
+          <svg viewBox="0 0 200 200" fill="none" aria-hidden="true">
+            <path d="M100,10 115.3,63 163.6,36.4 137,84.7 190,100 137,115.3 163.6,163.6 115.3,137 100,190 84.7,137 36.4,163.6 63,115.3 10,100 63,84.7 36.4,36.4 84.7,63Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+            <circle cx="100" cy="100" r="19" stroke="currentColor" stroke-width="1.6"/>
+            <text x="100" y="109" text-anchor="middle" font-family="Amiri, serif" font-size="30" fill="currentColor">ب</text>
+          </svg>
+      <span class="marka-yazi"><b>Beyt</b><i>Arapça Eğitim</i></span>
+        </a>
+        <p>Sefarî kürsüsünden derse. Harften kıraata, sakin ve dikkatli bir okuma yolu.</p>
+        <div class="sosyal">
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="X">x</a>
+          <a href="#" aria-label="YouTube">yt</a>
+        </div>
+      </div>
+      <div>
+        <h6>Program</h6>
+        <ul>
+          <li><a href="#program">Yol haritası</a></li>
+          <li><a href="#alfabet">Elifbâ</a></li>
+          <li><a href="#dersler">Dersler</a></li>
+          <li><a href="#metot">Yöntem</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>Kaynaklar</h6>
+        <ul>
+          <li><a href="#kelimeler">Kelime defteri</a></li>
+          <li><a href="#sinav">Sınav</a></li>
+          <li><a href="#ogretmenler">Öğretmenler</a></li>
+          <li><a href="#fiyat">Kayıt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>Kurum</h6>
+        <ul>
+          <li><a href="mailto:merhaba@beyt-arapca.com">merhaba@beyt-arapca.com</a></li>
+          <li><a href="tel:+9021200000000">+90 212 000 00 00</a></li>
+          <li><a href="#iletisim">İletişim</a></li>
+          <li><a href="#">Gizlilik</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="alt-son">
+      <span>© 2026 Beyt Arapça Eğitim. Tüm hakları saklıdır.</span>
+      <span>Bu sitedeki yazılar ve ders materyalleri öğretmenlere aittir.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="up" id="yukari" aria-label="Yukarı çık">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>
+</button>
+
+<!-- ============ DERS PANELİ ============ -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-perde" data-kapat></div>
+  <div class="modal-kutu" role="dialog" aria-modal="true" aria-labelledby="modalBaslik">
+    <button class="modal-x" data-kapat aria-label="Kapat">&#215;</button>
+    <div id="modalIcerik"></div>
+  </div>
+</div>
+
+<script>
+const $=(s,k=document)=>k.querySelector(s);
+const $$=(s,k=document)=>[...k.querySelectorAll(s)];
+const DUYARLI={'ç':'c','ğ':'g','ı':'i','İ':'i','ö':'o','ş':'s','ü':'u','â':'a','î':'i','û':'u','ê':'e'};
+const sadel=s=>s.toLocaleLowerCase('tr').replace(/[çğıöşüâîûêİ]/g,c=>DUYARLI[c]||c);
+const kaydet={
+  oku(a){try{const v=localStorage.getItem('beyt.'+a);return v===null?null:JSON.parse(v)}catch(e){return null}},
+  yaz(a,v){try{localStorage.setItem('beyt.'+a,JSON.stringify(v))}catch(e){}}
+};
+
+/* ---- tema ---- */
+const temaBtn=$('#temaBtn');
+temaBtn.addEventListener('click',()=>{
+  const gece=document.documentElement.classList.toggle('night');
+  kaydet.yaz('tema',gece?'night':'day');
+});
+
+/* ---- harfler ---- */
+const HARFLER=[
+ {a:'ا',ad:'Elif',tr:'elif',w:'أَمْس',wt:'dün',ac:'Uzun “a” sesi verir. Sağa bağlanmaz, kendinden sonraki harfi beklemez.'},
+ {a:'ب',ad:'Be',tr:'be',w:'بَيْت',wt:'ev',ac:'Tek nokta alttadır. Altı biçimde de nokta harfin altında kalır.'},
+ {a:'ت',ad:'Te',tr:'te',w:'تَمْر',wt:'hurma',ac:'Be’nin üç noktalı hâli. Baştaki iki nokta üst üste biner.'},
+ {a:'ث',ad:'Se',tr:'se',w:'ثَعْلَب',wt:'tilki',ac:'Te’nin üç noktalı hâli. Türkçedeki “s” sesi.'},
+ {a:'ج',ad:'Cim',tr:'cim',w:'جَمَل',wt:'deve',ac:'Nokta harfin içinde kalır; nokta bağlanmaz.'},
+ {a:'ح',ad:'Ha',tr:'ha',w:'حَجَر',wt:'taş',ac:'Noktasız ilk “h” sesi. Halka biçimindedir.'},
+ {a:'خ',ad:'Hi',tr:'hi',w:'خُبْز',wt:'ekmek',ac:'Ha’nın üstte tek noktalı hâli.'},
+ {a:'د',ad:'Dal',tr:'dal',w:'دَرْس',wt:'ders',ac:'Sağa bağlanmaz. Kendinden önceki harfin soluna geçer.'},
+ {a:'ذ',ad:'Zel',tr:'zel',w:'ذِهَب',wt:'gitti',ac:'Dal’ın üstte tek noktalı hâli.'},
+ {a:'ر',ad:'Re',tr:'re',w:'رَجُل',wt:'adam',ac:'Bağlanmaz. Uzatıldığında aşağı doğru kıvrılır.'},
+ {a:'ز',ad:'Zey',tr:'zey',w:'زَيْت',wt:'zeytin',ac:'Re’nin üstte tek noktalı hâli.'},
+ {a:'س',ad:'Sin',tr:'sin',w:'سَمَك',wt:'balık',ac:'Üç dişi vardır; sıralı harflerin başında gelir.'},
+ {a:'ش',ad:'Şin',tr:'şin',w:'شَمْس',wt:'güneş',ac:'Sin’in üç noktalı hâli.'},
+ {a:'ص',ad:'Sad',tr:'sad',w:'صَقْر',wt:'şahin',ac:'“Göğüs” harflerinden. Türkçedeki “s”den daha derin.'},
+ {a:'ض',ad:'Dad',tr:'dad',w:'ضَوْء',wt:'ışık',ac:'Sad’ın üstte tek noktalı hâli.'},
+ {a:'ط',ad:'Tı',tr:'tı',w:'طَرِيق',wt:'yol',ac:'Yanındaki dikey çizgiyi andıran bir gövde.'},
+ {a:'ظ',ad:'Zı',tr:'zı',w:'ظَبْي',wt:'ceylan',ac:'Tı’nın üstte tek noktalı hâli.'},
+ {a:'ع',ad:'Ayın',tr:'ayın',w:'عِلْم',wt:'ilim',ac:'Boğazdan gelen derin ses. Türkçede tam karşılığı yoktur.'},
+ {a:'غ',ad:'Ğayn',tr:'ğayn',w:'غُرَاب',wt:'karga',ac:'Ayın’ın üstte tek noktalı hâli.'},
+ {a:'ف',ad:'Fe',tr:'fe',w:'فِيل',wt:'fil',ac:'Tek noktası üsttedir.'},
+ {a:'ق',ad:'Kaf',tr:'kaf',w:'قَلَم',wt:'kalem',ac:'İki nokta üst üste. Kef’in bir nokta azı.'},
+ {a:'ك',ad:'Kef',tr:'kef',w:'كِتَاب',wt:'kitap',ac:'Noktasız. K’nin içinde küçük bir “s” işareti vardır.'},
+ {a:'ل',ad:'Lam',tr:'lam',w:'لَبَن',wt:'süt',ac:'Sivri bir başlığı vardır. “La” lam-elef dizisinde özel biçim alır.'},
+ {a:'م',ad:'Mim',tr:'mim',w:'مَدْرَسَة',wt:'okul',ac:'Küçük daire biçimindedir.'},
+ {a:'ن',ad:'Nun',tr:'nun',w:'نَجْم',wt:'yıldız',ac:'Kadeh biçimindedir; noktası içeridedir.'},
+ {a:'ه',ad:'He',tr:'he',w:'هِلَال',wt:'hilal',ac:'Deve boğazı andırır; nefes sesidir.'},
+ {a:'و',ad:'Vav',tr:'vav',w:'وَرْدَة',wt:'gül',ac:'Bağlanmaz. Üç nokta birbirine değer.'},
+ {a:'ي',ad:'Ye',tr:'ye',w:'يَد',wt:'el',ac:'Noktası altta, iki nokta yan yana. Türkçedeki “y” sesi.'}
+];
+const KELIME_OKUNUS={'أَمْس':'ams','بَيْت':'beyt','تَمْر':'temir','ثَعْلَب':"se'b",'جَمَل':'cemel','حَجَر':'hacer','خُبْز':'hubz','دَرْس':'ders','ذِهَب':'zihab','رَجُل':'recül','زَيْت':'zeyt','سَمَك':'semek','شَمْس':'şems','صَقْر':'saqr','ضَوْء':'dav','طَرِيق':'tarîk','ظَبْي':'zaby','عِلْم':'ilm','غُرَاب':'gurâb','فِيل':'fîl','قَلَم':'kalem','كِتَاب':'kitâb','لَبَن':'leban','مَدْرَسَة':'medrese','نَجْم':'necim','هِلَال':'hilal','وَرْدَة':'verde','يَد':'yed'};
+const HARF_SIRA=['مفرد','أوّل','وسط','آخر'];
+function harfBicimleri(a){
+  if(['ا','د','ذ','ر','ز','و'].includes(a)) return [a,'—','—','—'];
+  const T='\u0640';
+  return [a,a+T,T+a+T,a];
+}
+const alfabeEl=$('#alfabe');
+HARFLER.forEach((h,i)=>{
+  const b=document.createElement('button');
+  b.className='harf';b.type='button';b.setAttribute('role','tab');
+  b.dataset.i=i;b.dataset.k=sadel(h.ad+' '+h.tr+' '+(KELIME_OKUNUS[h.w]||'')+' '+h.a+' '+h.wt);
+  b.innerHTML='<span class="ar">'+h.a+'</span>';
+  b.setAttribute('aria-label',h.ad+' harfi');
+  b.addEventListener('click',()=>harfSec(i));
+  alfabeEl.appendChild(b);
+});
+function harfSec(i){
+  const h=HARFLER[i];
+  $$('.harf',alfabeEl).forEach(el=>el.classList.toggle('secili',+el.dataset.i===i));
+  const b=harfBicimleri(h.a);
+  $('#harfKutu').innerHTML=
+   '<div class="harf-buyuk">'+h.a+'<small>'+h.tr+'</small></div>'+
+   '<div>'+
+     '<p class="harf-ad">'+h.ad+' <em>— '+h.tr+'</em></p>'+
+     '<p class="harf-aciklama">'+h.ac+'</p>'+
+     '<div class="formlar">'+b.map((x,k)=>'<div class="form"><b class="ar">'+x+'</b><span>'+HARF_SIRA[k]+'</span></div>').join('')+'</div>'+
+     '<div class="ornek-kutu"><b class="ar">'+h.w+'</b><i>'+(KELIME_OKUNUS[h.w]||h.tr)+'</i><span>'+h.wt+'</span></div>'+
+   '</div>';
+}
+harfSec(0);
+$('#harfAra').addEventListener('input',e=>{
+  const q=sadel(e.target.value.trim());
+  $$('.harf',alfabeEl).forEach(el=>el.classList.toggle('gizli',q!==''&&!el.dataset.k.includes(q)));
+});
+
+/* ---- kelimeler ---- */
+const KELIMELER=[
+ ['اَلْعَرَبِيَّةُ','el-arabiyye','Arapça (dil adı)'],
+ ['كِتَاب','kitâb','kitap'],
+ ['قَلَم','kalem','kalem'],
+ ['مَدْرَسَة','medrese','okul'],
+ ['مَكْتَبَة','mektaba','kütüphane'],
+ ['طَالِب','tâlib','öğrenci'],
+ ['مُعَلِّم','muallim','öğretmen'],
+ ['صَدِيق','sadîk','arkadaş'],
+ ['بَيْت','beyt','ev'],
+ ['مَطْعَم','mat\'am','restoran'],
+ ['لُغَة','luga','dil'],
+ ['حَرْف','harf','harf'],
+ ['كَلِمَة','kelime','kelime'],
+ ['جُمْلَة','cümle','cümle'],
+ ['صَبَاح','sabâh','sabah'],
+ ['مَسَاء','mesâ','akşam'],
+ ['يَوْم','yevm','gün'],
+ ['لَيْل','leyl','gece'],
+ ['شَمْس','şems','güneş'],
+ ['قَمَر','kamer','ay'],
+ ['مَاء','mâ','su'],
+ ['طَعَام','taam','yemek'],
+ ['عَمَل','amel','iş'],
+ ['وَقْت','vakt','zaman, vakit'],
+ ['سَمَاء','semâ','gökyüzü'],
+ ['أَرْض','arz','toprak, yer'],
+ ['جَمِيل','cemîl','güzel'],
+ ['صَبِير','sabîr','sabırlı'],
+ ['كَبِير','kebîr','büyük'],
+ ['جَدِيد','cedîd','yeni'],
+ ['قَدِيم','kadîm','eski'],
+ ['قَرِيب','karîb','yakın'],
+ ['بَعِيد','be\'îd','uzak'],
+ ['سَهْل','sehel','kolay'],
+ ['صَعْب','sa\'b','zor'],
+ ['حِكَايَة','hikâye','masal, hikâye'],
+ ['سَمَك','semek','balık']
+];
+const kelimeGovde=$('#kelimeGovde');
+function kelimeCiz(sonra=10){
+  const q=sadel($('#kelimeAra').value.trim());
+  const hepsi=KELIMELER.filter(k=>!q||sadel(k[1]+' '+k[2]+' '+k[0]).includes(q));
+  const dilim=hepsi.slice(0,sonra);
+  kelimeGovde.innerHTML=dilim.map(k=>'<tr><td><b class="ar">'+k[0]+'</b></td><td>'+k[1]+'</td><td>'+k[2]+'</td></tr>').join('');
+  const goster=hepsi.length;
+  $('#kelimeSayac').textContent=q
+    ? (goster?goster+' sonuç':'Aramanızla eşleşen kelime yok')
+    : (goster<hepsi.length?goster+' / '+hepsi.length+' kelime gösteriliyor':hepsi.length+' kelime');
+}
+kelimeCiz();
+$('#kelimeAra').addEventListener('input',()=>kelimeCiz(20));
+const gunun=KELIMELER[Math.floor(Date.now()/86400000)%KELIMELER.length];
+$('#gununHarf').textContent=gunun[0];
+$('#gununTr').textContent=gunun[2];
+$('#gununOkunus').innerHTML='<span class="ar" style="font-size:1.5rem">'+gunun[0]+'</span> <span class="tel">'+gunun[1]+'</span>';
+
+/* ---- tashkeel gizleme ---- */
+const TASHKEEL=/[\u0610-\u061A\u064B-\u0655\u0670\u06D6-\u06ED]/g;
+const sade=metin=>metin.replace(TASHKEEL,'');
+$$('[data-tk-btn]').forEach(b=>b.addEventListener('click',()=>{
+  const kap=b.closest('.metin-kart');
+  $$('[data-tk]',kap).forEach(el=>{
+    if(el.dataset.duz===undefined) el.dataset.duz=el.textContent;
+    el.textContent=el.dataset.duz;
+    if(b.dataset.acik!=='1') el.textContent=sade(el.dataset.duz);
+  });
+  const acik=b.dataset.acik==='1';
+  b.dataset.acik=acik?'0':'1';
+  b.textContent=acik?'Gizle':'Göster';
+}));
+
+/* ---- dersler ---- */
+const DERSLER=[
+ {faz:'Faz I · Elifbâ',bas:'Elifbâya giriş',dk:14,ac:'Yazı sağdan sola yazılır. Alfabenin harf sayısını ve bariz harflerle sakin harflerin farkını öğrenirsiniz.',kav:['Kalküme ve medeniyet harfleri ayrımı','Yazma yönü ve satır tekniği','Alfabesini iki dakikada sayma']},
+ {faz:'Faz I · Elifbâ',bas:'İlk dört harf: ا ب ت ث',dk:16,ac:'Bu dört harfin dört biçimini kâğıda yazar, birleştirerek dört heceli sözcükler kurarsınız.',kav:['Elif’in bağlanmaz oluşu','Be–Te–Se nokta düzeni','Hecede harflerin yer değiştirmesi']},
+ {faz:'Faz I · Elifbâ',bas:'Harflerin birleşmesi',dk:24,ac:'Altı kutu kuralı ile hangi harfin nereye oturacağını tahmin etmeyi öğrenirsiniz.',kav:['Sağdan bağlanma kuralı','Tatweel kullanımı','Kelime sonu biçimleri']},
+ {faz:'Faz I · Elifbâ',bas:'Göğüs harfleri: س ش ص ض ط ظ',dk:19,ac:'Göğüs harflerini tek grupta çalışır, benzerlerini karşılaştırmalı dinlersiniz.',kav:['Sin–Şin ayrımı','Sad–Dad kalın sesi','Tı–Zı için telaffuz']},
+ {faz:'Faz I · Elifbâ',bas:'Harekeler: fatha, kasra, damma',dk:22,ac:'Üç kısa ünle harfin üstüne, altına veya üstüne konur; kelimenin anlamını o harf belirler.',kav:['Fatha ile “a”','Damma ile “u”','Kasra ile “i”']},
+ {faz:'Faz I · Elifbâ',bas:'Sükûn, şedde, tenvin',dk:21,ac:'Kısa ünlerin yokluğu ve uzunluğunu anlatır: bu derste okuma hızınız belirgin biçimde artar.',kav:['Sükûn ile harf bitişi','Şedde ile harfin iki kez okunması','Tenvin: iki okunuş']},
+ {faz:'Faz II · Temel Okuma',bas:'Harf çubukları arasında bağ',dk:20,ac:'Baş, orta, son biçimlerini yan yana dizip hece sınırlarını görmeyi öğrenirsiniz.',kav:['Üç harfli yapı','Altı kutu kuralının pekiştirilmesi','Satır sonunda bölünme']},
+ {faz:'Faz II · Temel Okuma',bas:'Heceler ve hece uzunluğu',dk:23,ac:'Kısa ve uzun hece farkını duyduğunuzda kelimeler artık harf yığını değil, ses dizisi olur.',kav:['Kapalı ve açık hece','Uzun “â” sesi','Heceleri birbirine bağlamak']},
+ {faz:'Faz II · Temel Okuma',bas:'Tanışma kalıpları',dk:18,ac:'مَا اسْمُكَ؟ gibi on iki kalıbı ezberlemeden, kalıbı kurarak cevap verirsiniz.',kav:['İsim sorma ve cevaplama','Nerelisiniz kalıbı','Hoşgeldiniz karşılığı']},
+ {faz:'Faz II · Temel Okuma',bas:'Rakamlar: ١ ٢ ٣ … ٠',dk:17,ac:'Arapça rakamları hem yazı hem okunak biçiminde; sayı sözcükleriyle birlikte çalışır.',kav:['Doğu Arap rakamları','٣٠ sırasında okuma','Yaş ve saat ifadeleri']},
+ {faz:'Faz II · Temel Okuma',bas:'İlk paragraf: صَبَاحُ الخَيْر',dk:25,ac:'On dört kelimelik bir paragrafu önce harf harf, sonra kelime kelime, sonra beklemeden okursunuz.',kav:['Metni üç kere okuma','Noktalama ve duraklama','Anlamı tahmin etme'],ornek:{ar:'الطَّالِبُ يَجْلِسُ فِي المَكْتَبَةِ وَيَقْرَأُ كِتَابًا جَدِيدًا. هُوَ يَدْرُسُ اللُّغَةَ العَرَبِيَّةَ كُلَّ يَوْم. فِي المَسَاءِ يَكْتُبُ دَرْسَهُ فِي دَفْتَرٍ صَغِير.',tr:'Öğrenci kütüphanede oturur ve yeni bir kitap okur. Her gün Arapça öğrenir. Akşam dersini küçük bir deftere yazar.'}},
+ {faz:'Faz II · Temel Okuma',bas:'Telaffuz: vurgulu dört harf',dk:26,ac:'ص ض ط ظ sesleri Arapçada ayrı bir takım oluşturur; Türkçe karşılıkları yanıltıcıdır.',kav:['Dil ucunu açma','Sükûn ile uzatma','Kayıt dinleme görevi']},
+ {faz:'Faz III · Sözlük',bas:'Kırk temel kelime',dk:22,ac:'Metinlerde en sık geçen kırk kelime; hepsi bu derste karta basılır.',kav:['Kök ve ek ayrımı','Niteleme sıfatları','Tekrar aralığı']},
+ {faz:'Faz III · Sözlük',bas:'Fiil kipi: ماضٍ · مُضَارِع · أَمْر',dk:27,ac:'Üç zamanın işaretlerini tanıyıp günlük cümle kurarsınız.',kav:['Geçmiş zaman soneki','Şimdiki zaman eki','Emir kipinin yapısı']},
+ {faz:'Faz III · Sözlük',bas:'Sıfat ve niteleme',dk:21,ac:'“Büyük bir ev”, “eski bir kitap” gibi sıfatın nitelediği isimden önce gelir.',kav:['Sıfatın nitelenen isme bitişmesi','Takıyid (ال) kullanımı','Zıt anlamlı çiftler']},
+ {faz:'Faz III · Sözlük',bas:'Zaman ifadeleri',dk:19,ac:'Sabah, akşam, yarın, dün; bu kelimelerle bir günün anlatısını yazarsınız.',kav:['Zaman kelimeleri','Hâl kipi (في)','Olumsuz cümle']},
+ {faz:'Faz III · Sözlük',bas:'Sayılar ve sıfat sayılar',dk:24,ac:'Üçe kadar tekil, üçten sonra çoğul; Türkçenin aksine düzen değişir.',kav:['1–10 sayım kuralı','11 ve üzeri düzen','Sıfat sayıların çoğulu']},
+ {faz:'Faz III · Sözlük',bas:'Soru cümleleri',dk:20,ac:'نَـ, أَ, هَل, مَتَى, أَيْنَ soru ekleriyle istediğiniz bilgiyi sorarsınız.',kav:['Beş soru kalıbı','Olumsuz soru','Cevapta ayrıntı verme']},
+ {faz:'Faz IV · Kıraat',bas:'Nesih yazısına giriş',dk:26,ac:'El yazısının en okunur hattı: kalem açısı, satır aralığı ve harflerin incelmesi.',kav:['Kalem ve mürekkep','Satır ritmi','Kendi satırını yazmak']},
+ {faz:'Faz IV · Kıraat',bas:'Okuma kuralları',dk:23,ac:'Noktalama, duraklama ve vurgu kurallarıyla akıcı okumanın teknik tarafı.',kav:['Duraklama işaretleri','Vurgu ve ton','Yüksek sesle okuma']},
+ {faz:'Faz IV · Kıraat',bas:'Kısa hikâye: الرِّحْلَة',dk:28,ac:'Yüz kelimelik anlatı. İlk kez süre tutmadan, sonuna kadar okuyorsunuz.',kav:['Anlatı zamanları','Bağlaçlarla sıralama','Hikâye özetleme'],ornek:{ar:'سَافَرَ الفَتَى مِنَ المَدِينَةِ إِلَى البَحْر. أَخَذَ مَعَهُ خُبْزًا وَقَلَمًا. فِي الطَّرِيقِ رَأَى شَجَرَةً كَبِيرَةً وَجَلَسَ تَحْتَهَا. ثُمَّ عَادَ إِلَى المَدِينَةِ فِي المَسَاءِ.',tr:'Genç, şehirden denize yolculuk etti. Yanına ekmek ve kalem aldı. Yolda büyük bir ağaç gördü ve altına oturdu. Akşam şehre döndü.'}},
+ {faz:'Faz IV · Kıraat',bas:'Metin okuma: مِنْ أَحْدَاثِ يَوْمٍ',dk:25,ac:'Bir günün kaydı: zaman ifadeleri ve sıralama bağlaçlarıyla dolu bir metin.',kav:['Zaman sıralaması','Bağlaçların çeşidi','Anlatıcı sesi']},
+ {faz:'Faz IV · Kıraat',bas:'Diyalog: في المَطْعَم',dk:24,ac:'İki kişilik sipariş ve hesap konuşması; rol değiştirerek tekrarlarsınız.',kav:['Sipariş kalıbı','Fiyat sözcükleri','Nazik konuşma ifadeleri'],ornek:{ar:'— تَفَضَّل، مَاذَا تُرِيد؟ — أُرِيدُ شَايًا بِلَسْمِ اللَّيْمُون. بِكَمْ؟ — بِثَمَانِ لِيرَاتٍ. شُكْرًا جَزِيلًا.',tr:'— Buyurun, ne istersiniz? — Limonlu çay istiyorum. Ne kadar? — Sekiz lira. Çok teşekkürler.'}},
+ {faz:'Faz IV · Kıraat',bas:'Bitirme okuması',dk:30,ac:'Kendi seçtiğiniz bir metni seçersiniz: şiir, gazetere yazısı ya da risale. Seçim size aittir.',kav:['Metin seçme','Kendi okuma günlüğü','Sertifika okuması']}
+];
+let biten=kaydet.oku('biten',[])||[];
+const TAMAM=38;
+function dersDurum(i){
+  if(biten.includes(i)) return 'bitti';
+  const acik=biten.length+3;
+  return i<acik?'acik':'kilitli';
+}
+function dersCiz(){
+  $('#dersList').innerHTML=DERSLER.map((d,i)=>{
+    const dur=dersDurum(i);
+    const dolu=dur==='bitti';
+    return '<li class="'+(dur==='kilitli'?'kilitli':'')+'"><button data-ders="'+i+'" '+(dur==='kilitli'?'disabled':'')+'>'+
+      '<span class="idx">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<span><span class="faz">'+d.faz+'</span><h5>'+d.bas+'</h5></span>'+
+      '<span class="sure">'+d.dk+' dk</span>'+
+      '<span class="durum"><span class="ok '+(dolu?'dolu':'')+'">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2"><path d="m5 12.5 4.5 4.5L19 7"/></svg>'+
+        '<svg class="kilit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2"><path d="M7 11V8.5a5 5 0 0 1 10 0V11"/><rect x="5" y="11" width="14" height="9" rx="1.5"/></svg>'+
+      '</span><span>'+(dolu?'Tamamlandı':dur==='kilitli'?'Kilitli':'Devam et')+'</span></span>'+
+      '<span style="color:var(--soluk);display:grid;place-items:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 5 7 7-7 7"/></svg></span>'+
+    '</button></li>';
+  }).join('');
+  $$('#dersList button').forEach(b=>b.addEventListener('click',()=>dersAc(+b.dataset.ders)));
+  const y=Math.round(biten.length/DERSLER.length*100);
+  $('#ileriCubuk').style.width=y+'%';
+  $('#ileriYazi').textContent=biten.length+' / '+DERSLER.length+' ders';
+}
+function modalIcerik(html){
+  $('#modalIcerik').innerHTML=html;
+  $('#modal').hidden=false;
+  document.body.style.overflow='hidden';
+  $('.modal-kutu').scrollTop=0;
+  $('.modal-x').focus();
+}
+function modalKapat(){
+  $('#modal').hidden=true;document.body.style.overflow='';
+}
+$$('[data-kapat]').forEach(el=>el.addEventListener('click',modalKapat));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal').hidden)modalKapat()});
+
+function dersAc(i){
+  const d=DERSLER[i],dur=dersDurum(i);
+  let ic='<span class="k">'+d.faz+'</span><h3 id="modalBaslik">'+d.bas+'</h3>'+
+    '<div class="modal-meta"><span>'+d.dk+' dakika</span><span>Ders '+(i+1)+' / '+DERSLER.length+'</span><span>'+dur+'</span></div>'+
+    '<p class="ders-ac">'+d.ac+'</p>'+
+    (d.ornek?'<div class="metin-kart" style="margin-top:26px"><span class="k">Örnek metin</span><p class="metin-ar">'+d.ornek.ar+'</p><p class="metin-tr">'+d.ornek.tr+'</p></div>':'')+
+    '<ul class="modal-kavram">'+d.kav.map(k=>'<li>'+k+'</li>').join('')+'</ul>'+
+    '<div class="modal-alt"><button class="dugme '+(dur==='bitti'?'':'ince')+'" id="bitirBtn">'+(dur==='bitti'?'Dersi sıfırla':'Dersi tamamlandı işaretle')+'</button>'+
+    '<button class="dugme ince" data-kapat>Kapat</button></div>';
+  modalIcerik(ic);
+  $('#modalIcerik [data-kapat]').addEventListener('click',modalKapat);
+  $('#bitirBtn').addEventListener('click',()=>{
+    const p=biten.indexOf(i);
+    if(p>-1) biten.splice(p,1); else biten.push(i);
+    kaydet.yaz('biten',biten);dersCiz();modalKapat();
+  });
+}
+$('#sifirla').addEventListener('click',()=>{biten=[];kaydet.yaz('biten',biten);dersCiz()});
+dersCiz();
+
+/* ---- sınav ---- */
+const SORULAR=[
+ {ar:'كِتَاب',s:'Bu kelime Türkçede ne demek?',o:['Su','Kitap','Okul','Yol'],d:1,ip:'كِتَاب — kitâb: kitap. Harf sırasında kaf (ق) ile aynı gruptadır.'},
+ {ar:'مَاء',s:'Türkçede “su” anlamına gelen sözcük hangisidir?',o:['نار','ماء','هواء','أرض'],d:1,ip:'مَاء — mâ: su. Nefes ve “â” sesi birlikte okunur.'},
+ {s:'Fatha harekesi nerede durur?',o:['Harfin altında','Harfin üstünde','Harfin içinde','Satır sonunda'],d:1,ip:'Fatha harfin üstüne konur ve kısa “a” okutur: بَ = ba. Kasra alta, damma üste konur.'},
+ {ar:'صَقْر',s:'Bu kelimenin anlamı nedir?',o:['Balık','Karga','Şahin','Deve'],d:2,ip:'صَقْر — saqr: şahin. Sad (ص) harfi “göğüs harflerinden”dir, k sırasında okunur.'},
+ {s:'“الطالب يدرس اللغة العربية كل يوم.” cümlesi ne söylüyor?',o:['Öğrenci her gün Arapça çalışıyor','Öğretmen Arapça yazıyor','Kitap kütüphanede kalıyor','Çocuk su içiyor'],d:0,ip:'الطالب (öğrenci) يدرس (çalışıyor) اللغة العربية (Arapça dili) كل يوم (her gün).'},
+ {ar:'',s:'Harf “ب” bir sözcüğün başında nasıl görünür?',o:['ـب','بـ','بـب','ب'],d:1,ip:'Sağdan yazıldığı için harf kendinden sonraki harfe soldan bağlanır: بَاب = bâb, kapı. Baştaki biçim hep بـ şeklindedir.'}
+];
+const HARFLER_TR=['A','B','C','D'];
+let sira=0,cevaplanan=false,dogruSay=0,bitti=false;
+function sinavCiz(){
+  bitti=false;
+  const s=SORULAR[sira];
+  $('#soruSayac').textContent='Soru '+(sira+1)+' / '+SORULAR.length;
+  $('#soruMetin').textContent=s.s;
+  $('#soruAr').textContent=s.ar;
+  $('#soruAr').style.display=s.ar?'block':'none';
+  $('#sinavCubuk').style.width=((sira)/SORULAR.length*100)+'%';
+  $('#secenekler').innerHTML=s.o.map((o,i)=>'<li><button data-o="'+i+'"><span class="sec-harf">'+HARFLER_TR[i]+'</span><span class="dogr">'+o+'</span></button></li>').join('');
+  $$('#secenekler button').forEach(b=>b.addEventListener('click',()=>secildi(+b.dataset.o,b)));
+  $('#aciklama').classList.remove('gorunur');
+  $('#puanYazi').textContent='';
+  $('#sinavBtn').style.display='none';
+  $('#sinavBtn').textContent=sira===SORULAR.length-1?'Sonucu gör':'Sonraki soru';
+  cevaplanan=false;
+}
+function secildi(i,b){
+  if(cevaplanan)return;cevaplanan=true;
+  const s=SORULAR[sira];
+  $$('#secenekler button').forEach(x=>{
+    x.disabled=true;
+    if(+x.dataset.o===s.d) x.classList.add('dogru');
+  });
+  if(i===s.d){dogruSay++;}
+  else{b.classList.add('yanlis');$('#secenekler button[data-o="'+s.d+'"]').classList.add('dogru');}
+  $('#aciklama').textContent=s.ip;
+  $('#aciklama').classList.add('gorunur');
+  $('#puanYazi').textContent=dogruSay+' / '+(sira+1)+' doğru';
+  $('#sinavBtn').style.display='inline-flex';
+  $('#sinavCubuk').style.width=((sira+1)/SORULAR.length*100)+'%';
+}
+$('#sinavBtn').addEventListener('click',()=>{
+  if(bitti){sinavCiz();return}
+  if(!cevaplanan)return;
+  if(sira<SORULAR.length-1){sira++;sinavCiz();return}
+  const yuzde=Math.round(dogruSay/SORULAR.length*100);
+  const enIyi=kaydet.oku('sinav',0)||0;
+  if(yuzde>enIyi)kaydet.yaz('sinav',yuzde);
+  $('#enIyi').textContent=(kaydet.oku('sinav',0)||0)+'%';
+  $('#soruSayac').textContent='Sınav bitti';
+  $('#soruMetin').textContent='Beyt sizi dinliyor.';
+  $('#soruAr').style.display='none';
+  $('#secenekler').innerHTML='<li class="sonuc"><b>'+dogruSay+'/'+SORULAR.length+'</b><span>'+
+    (yuzde>=80?'Metin okumaya hazırsınız. Faz IV’e geçebilirsiniz.':yuzde>=50?'Temel oturdu. Tekrar edilen harfleri bir kez daha gözden geçirin.':'Elifbâ’yı baştan izleyin; acele etmeye gerek yok.')+
+    '</span></li>';
+  $('#aciklama').classList.remove('gorunur');
+  $('#puanYazi').textContent='En iyi puanınız: '+(kaydet.oku('sinav',0))+'%';
+  $('#sinavBtn').textContent='Yeniden çöz';
+  $('#sinavBtn').style.display='inline-flex';
+  bitti=true;dogruSay=0;sira=0;
+});
+(function(){const e=kaydet.oku('sinav',0);$('#enIyi').textContent=e?e+'%':'—';})();
+sinavCiz();
+
+/* ---- form ---- */
+$('#iletForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const ad=$('#ad').value.trim(),ep=$('#eposta').value.trim();
+  if(!ad||!ep.includes('@')){ $('#eposta').focus(); return; }
+  $('#formYanit').classList.add('gorunur');
+  e.target.reset();
+});
+
+/* ---- gezinme, kaydırma, vurgu ---- */
+const menu=$('#menu'),yukari=$('#yukari');
+addEventListener('scroll',()=>{
+  menu.classList.toggle('izildi',scrollY>24);
+  yukari.classList.toggle('gorunur',scrollY>700);
+},{passive:true});
+yukari.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+const mBtn=$('#mobilBtn'),linkler=$('#linkler');
+mBtn.addEventListener('click',()=>{
+  const a=linkler.classList.toggle('acik');
+  mBtn.setAttribute('aria-expanded',a?'true':'false');
+  mBtn.textContent=a?'Kapat':'Menü';
+});
+$$('#linkler a').forEach(a=>a.addEventListener('click',()=>{
+  linkler.classList.remove('acik');mBtn.textContent='Menü';mBtn.setAttribute('aria-expanded','false');
+}));
+
+const bolumler=$$('main section[id]');
+const gozlemci=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    $$('#linkler a').forEach(a=>a.classList.toggle('etkin',a.getAttribute('href')==='#'+e.target.id));
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+bolumler.forEach(b=>gozlemci.observe(b));
+
+if('IntersectionObserver' in document&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const bel=$$('.rev');
+  const g=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('gor');g.unobserve(e.target)}});
+  },{threshold:.08,rootMargin:'0px 0px -8% 0px'});
+  bel.forEach(b=>g.observe(b));
+}else{
+  $$('.rev').forEach(b=>b.classList.add('gor'));
+}
+</script>
+</body>
+</html>
